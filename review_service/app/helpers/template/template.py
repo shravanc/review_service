@@ -1,23 +1,47 @@
-#Components
-from app.helpers.composite.components.languages.english       import English
-from app.helpers.composite.components.models.simple           import Simple
-from app.helpers.composite.components.predictions.sentiment   import SentimentPrediction
-from app.helpers.composite.components.saving.local            import Local
-from app.helpers.composite.components.tokenizer.keras         import KerasTokenizer
-from app.helpers.composite.components.training.adam_training  import AdamTraining
-
-#from app.helpers.composite.components. import
-#from app.helpers.composite.components. import
 from app.helpers.composite.composite import Composite
 
+from abc import ABC, abstractmethod
 
 
 class Template:
+  def __init__(self):
+    print("****called****")
+    self.tree = Composite()
+    self.branches = []
 
-  def template_method(self):
+  def prediction_template(self, texts):
+    self.texts = texts
+
+    self.branches.append(self.text_data())
+    self.branches.append(self.prediction())
+
+    print("***before_add***")
+    self.add_branches()
+    print("***after_add***")
+    self.operate()
+
+    return self.response_format()
+
+
+  def add_branches(self):
+    for branch in self.branches:
+      self.tree.add(branch)
+
+  def operate(self):
+    self.resp = self.tree.operation( self.texts )
+
+  def response_format(self):
+    return self.resp
+
+  @abstractmethod
+  def text_data(self):
     pass
 
-
-
-  def english_data(self):
+  @abstractmethod
+  def prediction(self):
     pass
+
+  @abstractmethod
+  def train(self):
+    pass
+

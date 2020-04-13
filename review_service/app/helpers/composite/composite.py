@@ -11,11 +11,7 @@ class Composite(Component):
   def operation(self, data):
 
     for child in self._children:
-      print("----class---->", type(child))
       data = child.operation( data )
-
-
-    #print("-->data-->", data)
 
     return data
     
