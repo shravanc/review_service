@@ -1,6 +1,6 @@
 from app.helpers.composite.components.component import Component
 
-
+import numpy as np
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
@@ -22,6 +22,7 @@ class KerasTokenizer(Component):
                ):
 
     self.texts      = None
+    self.labels     = None
     self.vocab_size = vocab_size
     self.oov_token  = oov_token
     self.max_len    = max_len
@@ -35,7 +36,11 @@ class KerasTokenizer(Component):
 
   def operation(self, obj=None):
     print("--------KERAS-----------")
-    self.texts = obj.texts
+    self.texts  = obj.texts
+    self.labels = obj.labels
+    if obj.labels is not None:
+      self.labels = np.array(obj.labels)
+
     self.tokenizer.fit_on_texts(self.texts)
     
     sequences = self.tokenizer.texts_to_sequences(self.texts)

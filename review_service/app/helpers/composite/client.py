@@ -34,3 +34,15 @@ class Client:
     return result
 
 
+class TrainClient():
+  self.tree = Composite()
+
+  self.english_branch = Composite()
+  self.english_branch.add(English())
+  self.english_branch.add(KerasTokenizer())
+
+
+  self.model_branch = composite()
+  self.model_branch.add(Simple())
+  self.model_branch.add(AdamTraining())
+  self.model_branch.add(Local())

@@ -2,6 +2,7 @@ from flask import request, jsonify, render_template
 
 from app.helpers.train import train_data, predict_data
 from app.helpers.template.basic_sentiment_prediction import BasicSentimentPrediction
+from app.helpers.template.train import Train
 
 def index():
   engine = MovieReview()
@@ -10,7 +11,12 @@ def index():
 
 def train():
   data = request.get_json()
-  train_data( data['reviews'], data['labels'] ) 
+
+  temp = Train()
+  temp.training_template(data['reviews'], data['labels'])
+
+
+  #train_data( data['reviews'], data['labels'] ) 
 
   return jsonify( {'message': 'Training successful'} )
 

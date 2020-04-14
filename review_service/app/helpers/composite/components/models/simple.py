@@ -12,7 +12,8 @@ class Simple(Component):
     self.model  = None 
 
   def operation(self, obj=None):
-    self.model = tf.keras.models.load_model(self.path)
-    self.texts = obj.padded
+    self.model  = tf.keras.models.load_model(self.path)
+    self.texts  = obj.padded
+    self.labels = obj.labels
     return self
 
